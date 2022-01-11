@@ -36,22 +36,22 @@ class HTTPClientSpy: HTTPClient {
 class RemoteCoffeePostsLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy()
-        let url = URL(string: "https://any-url.com")!
-
-        let _ = RemoteCoffeePostsLoader(url: url, client: client)
+        let (_, client) = makeSUT()
                 
         XCTAssertNil(client.requestedURL)
     }
     
     func test_load_requestsFromURL() {
-        let url = URL(string: "https://any-url.com")!
-        let client = HTTPClientSpy()
-        let sut = RemoteCoffeePostsLoader(url: url, client: client)
-        
+        let url = URL(string: "https://a-given-url.com")!
+        let (sut, client) = makeSUT(url: url)
         sut.load()
         
         XCTAssertEqual(url, client.requestedURL)
     }
 
+    private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteCoffeePostsLoader(url: url, client: client)
+        return (sut, client)
+    }
 }
