@@ -19,7 +19,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         let client = HTTPClient()
-        let sut = RemoteCoffeePostsLoader()
+        let _ = RemoteCoffeePostsLoader()
                 
         XCTAssertNil(client.requestedURL)
     }
