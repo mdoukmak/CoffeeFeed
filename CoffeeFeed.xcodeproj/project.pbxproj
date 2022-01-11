@@ -12,6 +12,7 @@
 		529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E4278DF78A00281F9E /* CoffeePost.swift */; };
 		529947E7278DF8D200281F9E /* CoffeePostsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */; };
 		529947EB278DFBB500281F9E /* RemoteCoffeePostsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947EA278DFBB500281F9E /* RemoteCoffeePostsLoaderTests.swift */; };
+		529947EE278E0D8900281F9E /* RemoteCoffeePostsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947ED278E0D8900281F9E /* RemoteCoffeePostsLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		529947E4278DF78A00281F9E /* CoffeePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePost.swift; sourceTree = "<group>"; };
 		529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePostsLoader.swift; sourceTree = "<group>"; };
 		529947EA278DFBB500281F9E /* RemoteCoffeePostsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCoffeePostsLoaderTests.swift; sourceTree = "<group>"; };
+		529947ED278E0D8900281F9E /* RemoteCoffeePostsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCoffeePostsLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 		529947CC278DF66C00281F9E /* CoffeeFeed */ = {
 			isa = PBXGroup;
 			children = (
+				529947EC278E0D6600281F9E /* CoffeeFeedAPI */,
 				529947CE278DF66C00281F9E /* CoffeeFeed.docc */,
 				529947E9278DF96500281F9E /* CoffeeFeedFeature */,
 			);
@@ -94,6 +97,14 @@
 				529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */,
 			);
 			path = CoffeeFeedFeature;
+			sourceTree = "<group>";
+		};
+		529947EC278E0D6600281F9E /* CoffeeFeedAPI */ = {
+			isa = PBXGroup;
+			children = (
+				529947ED278E0D8900281F9E /* RemoteCoffeePostsLoader.swift */,
+			);
+			path = CoffeeFeedAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529947EE278E0D8900281F9E /* RemoteCoffeePostsLoader.swift in Sources */,
 				529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */,
 				529947E7278DF8D200281F9E /* CoffeePostsLoader.swift in Sources */,
 				529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */,
