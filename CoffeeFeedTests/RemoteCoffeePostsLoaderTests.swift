@@ -14,7 +14,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
                 
-        XCTAssertNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURLs, [])
     }
     
     func test_load_requestsFromURL() {
@@ -22,7 +22,16 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         sut.load()
         
-        XCTAssertEqual(url, client.requestedURL)
+        XCTAssertEqual(client.requestedURLs, [url])
+    }
+    
+    func test_loadTwice_requestsFromURLTwice() {
+        let url = URL(string: "https://a-given-url.com")!
+        let (sut, client) = makeSUT(url: url)
+        sut.load()
+        sut.load()
+        
+        XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
@@ -31,10 +40,10 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     private class HTTPClientSpy: HTTPClient {
-        var requestedURL: URL?
+        var requestedURLs: [URL] = []
         
         func get(from url: URL) {
-            requestedURL = url
+            requestedURLs.append(url)
         }
     }
 }
