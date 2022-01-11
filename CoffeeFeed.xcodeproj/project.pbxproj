@@ -11,7 +11,7 @@
 		529947D5278DF66D00281F9E /* CoffeeFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 529947CA278DF66C00281F9E /* CoffeeFeed.framework */; };
 		529947DA278DF66D00281F9E /* CoffeeFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947D9278DF66D00281F9E /* CoffeeFeedTests.swift */; };
 		529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E4278DF78A00281F9E /* CoffeePost.swift */; };
-		529947E7278DF8D200281F9E /* CoffeePostLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E6278DF8D200281F9E /* CoffeePostLoader.swift */; };
+		529947E7278DF8D200281F9E /* CoffeePostsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +30,7 @@
 		529947D4278DF66D00281F9E /* CoffeeFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		529947D9278DF66D00281F9E /* CoffeeFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeFeedTests.swift; sourceTree = "<group>"; };
 		529947E4278DF78A00281F9E /* CoffeePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePost.swift; sourceTree = "<group>"; };
-		529947E6278DF8D200281F9E /* CoffeePostLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePostLoader.swift; sourceTree = "<group>"; };
+		529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePostsLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				529947CE278DF66C00281F9E /* CoffeeFeed.docc */,
-				529947E4278DF78A00281F9E /* CoffeePost.swift */,
-				529947E6278DF8D200281F9E /* CoffeePostLoader.swift */,
+				529947E9278DF96500281F9E /* CoffeeFeedFeature */,
 			);
 			path = CoffeeFeed;
 			sourceTree = "<group>";
@@ -86,6 +85,15 @@
 				529947D9278DF66D00281F9E /* CoffeeFeedTests.swift */,
 			);
 			path = CoffeeFeedTests;
+			sourceTree = "<group>";
+		};
+		529947E9278DF96500281F9E /* CoffeeFeedFeature */ = {
+			isa = PBXGroup;
+			children = (
+				529947E4278DF78A00281F9E /* CoffeePost.swift */,
+				529947E6278DF8D200281F9E /* CoffeePostsLoader.swift */,
+			);
+			path = CoffeeFeedFeature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */,
-				529947E7278DF8D200281F9E /* CoffeePostLoader.swift in Sources */,
+				529947E7278DF8D200281F9E /* CoffeePostsLoader.swift in Sources */,
 				529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
