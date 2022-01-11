@@ -9,13 +9,15 @@ import XCTest
 
 class RemoteCoffeePostsLoader {
     let client: HTTPClient
+    let url: URL
     
-    init(client: HTTPClient) {
+    init(url: URL, client: HTTPClient) {
         self.client = client
+        self.url = url
     }
     
     func load() {
-        client.get(from: URL(string: "https://any-url.com")!)
+        client.get(from: url)
     }
 }
 
@@ -35,18 +37,21 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         let client = HTTPClientSpy()
-        let _ = RemoteCoffeePostsLoader(client: client)
+        let url = URL(string: "https://any-url.com")!
+
+        let _ = RemoteCoffeePostsLoader(url: url, client: client)
                 
         XCTAssertNil(client.requestedURL)
     }
     
     func test_load_requestsFromURL() {
+        let url = URL(string: "https://any-url.com")!
         let client = HTTPClientSpy()
-        let sut = RemoteCoffeePostsLoader(client: client)
+        let sut = RemoteCoffeePostsLoader(url: url, client: client)
         
         sut.load()
         
-        XCTAssertNotNil(client.requestedURL)
+        XCTAssertEqual(url, client.requestedURL)
     }
 
 }
