@@ -60,8 +60,8 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
             completions.append(completion)
         }
         
-        func complete(with error: Error) {
-            completions[0](error)
+        func complete(with error: Error, at index: Int = 0) {
+            completions[index](error)
         }
     }
 }
