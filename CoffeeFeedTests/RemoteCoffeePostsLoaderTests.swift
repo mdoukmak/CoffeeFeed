@@ -52,16 +52,15 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     private class HTTPClientSpy: HTTPClient {
-        var requestedURLs: [URL] = []
-        var completions: [(Error) -> Void] = []
+        var requests: [(url: URL, completion: (Error) -> Void)] = []
+        var requestedURLs: [URL] { requests.map { $0.url } }
         
         func get(from url: URL, completion: @escaping (Error) -> Void) {
-            requestedURLs.append(url)
-            completions.append(completion)
+            requests.append((url, completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            completions[index](error)
+            requests[index].completion(error)
         }
     }
 }
