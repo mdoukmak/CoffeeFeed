@@ -70,7 +70,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWithResult: .success([])) {
-            let emptyListJSON = Data("{\"posts\":[]}".utf8)
+            let emptyListJSON = makePostsJSON([])
             client.complete(withStatusCode: 200, data: emptyListJSON)
         }
     }
