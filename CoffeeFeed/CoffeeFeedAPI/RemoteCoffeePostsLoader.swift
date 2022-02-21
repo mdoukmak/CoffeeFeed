@@ -39,10 +39,10 @@ public final class RemoteCoffeePostsLoader {
         client.get(from: url) { result in
             switch result {
             case let .success(data, response):
-                if response.statusCode == 200,
-                   let root = try? JSONDecoder().decode(Root.self, from: data) {
-                    completion(.success(root.posts.map { $0.post }))
-                } else {
+                do {
+                    let posts = try CoffeePostsMapper.map(data, response: response)
+                    completion(.success(posts))
+                } catch {
                     completion(.failure(.invalidData))
                 }
             case .failure:
@@ -52,17 +52,25 @@ public final class RemoteCoffeePostsLoader {
     }
 }
 
-private struct Root: Decodable {
-    let posts: [Post]
-}
-
-private struct Post: Decodable {
-    public let id: UUID
-    public let description: String?
-    public let location: String?
-    public let image: URL
+private class CoffeePostsMapper {
+    static func map(_ data: Data, response: HTTPURLResponse) throws -> [CoffeePost] {
+        guard response.statusCode == 200 else {
+            throw RemoteCoffeePostsLoader.Error.invalidData
+        }
+        return try JSONDecoder().decode(Root.self, from: data).posts.map { $0.post }
+    }
+    private struct Root: Decodable {
+        let posts: [Post]
+    }
     
-    var post: CoffeePost {
-        return CoffeePost(id: id, description: description, location: location, imageURL: image)
+    private struct Post: Decodable {
+        public let id: UUID
+        public let description: String?
+        public let location: String?
+        public let image: URL
+        
+        var post: CoffeePost {
+            return CoffeePost(id: id, description: description, location: location, imageURL: image)
+        }
     }
 }
