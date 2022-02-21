@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CoffeePost {
+public struct CoffeePost: Equatable {
     let id: UUID
     let description: String?
     let location: String?

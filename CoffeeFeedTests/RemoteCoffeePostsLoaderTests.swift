@@ -72,12 +72,12 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     }
     
     private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithError error: RemoteCoffeePostsLoader.Error, when action: () -> Void) {
-        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
-        sut.load { capturedErrors.append($0) }
+        var capturedResults: [RemoteCoffeePostsLoader.Result] = []
+        sut.load { capturedResults.append($0) }
 
         action()
         
-        XCTAssertEqual(capturedErrors, [error])
+        XCTAssertEqual(capturedResults, [.failure(error)])
     }
     
     private class HTTPClientSpy: HTTPClient {
