@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5268437827C4244F00123DA7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437727C4244F00123DA7 /* HTTPClient.swift */; };
 		5268437A27C4247F00123DA7 /* CoffeePostsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437927C4247F00123DA7 /* CoffeePostsMapper.swift */; };
+		5268437D27C4441400123DA7 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437C27C4441400123DA7 /* URLSessionHTTPClient.swift */; };
+		5268437F27C4445400123DA7 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437E27C4445400123DA7 /* URLSessionHTTPClientTests.swift */; };
 		529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */ = {isa = PBXBuildFile; fileRef = 529947CE278DF66C00281F9E /* CoffeeFeed.docc */; };
 		529947D5278DF66D00281F9E /* CoffeeFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 529947CA278DF66C00281F9E /* CoffeeFeed.framework */; };
 		529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E4278DF78A00281F9E /* CoffeePost.swift */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		5268437727C4244F00123DA7 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		5268437927C4247F00123DA7 /* CoffeePostsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeePostsMapper.swift; sourceTree = "<group>"; };
+		5268437C27C4441400123DA7 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		5268437E27C4445400123DA7 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		529947CA278DF66C00281F9E /* CoffeeFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoffeeFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529947CE278DF66C00281F9E /* CoffeeFeed.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CoffeeFeed.docc; sourceTree = "<group>"; };
 		529947D4278DF66D00281F9E /* CoffeeFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				529947EA278DFBB500281F9E /* RemoteCoffeePostsLoaderTests.swift */,
+				5268437E27C4445400123DA7 /* URLSessionHTTPClientTests.swift */,
 			);
 			path = CoffeeFeedAPI;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 				529947ED278E0D8900281F9E /* RemoteCoffeePostsLoader.swift */,
 				5268437727C4244F00123DA7 /* HTTPClient.swift */,
 				5268437927C4247F00123DA7 /* CoffeePostsMapper.swift */,
+				5268437C27C4441400123DA7 /* URLSessionHTTPClient.swift */,
 			);
 			path = CoffeeFeedAPI;
 			sourceTree = "<group>";
@@ -230,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5268437D27C4441400123DA7 /* URLSessionHTTPClient.swift in Sources */,
 				529947EE278E0D8900281F9E /* RemoteCoffeePostsLoader.swift in Sources */,
 				5268437827C4244F00123DA7 /* HTTPClient.swift in Sources */,
 				529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */,
@@ -244,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				529947EB278DFBB500281F9E /* RemoteCoffeePostsLoaderTests.swift in Sources */,
+				5268437F27C4445400123DA7 /* URLSessionHTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
