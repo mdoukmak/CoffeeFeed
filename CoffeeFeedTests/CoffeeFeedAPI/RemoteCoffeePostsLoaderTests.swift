@@ -37,7 +37,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.connectivity)) {
+        expect(sut, toCompleteWithResult: failure(.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -48,7 +48,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         
         let samples = [199, 201, 300, 400, 500].enumerated()
         samples.forEach { index, code in
-            expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.invalidData)) {
+            expect(sut, toCompleteWithResult: failure(.invalidData)) {
                 let json = makePostsJSON([])
                 client.complete(withStatusCode: code, data: json, at: index)
             }
@@ -59,7 +59,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_returnsError_onHTTP200_withInvalidJSON() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.invalidData)) {
+        expect(sut, toCompleteWithResult: failure(.invalidData)) {
             let invalidJSON = Data("invalid JSON".utf8)
             
             client.complete(withStatusCode: 200, data: invalidJSON)
@@ -137,6 +137,10 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         }
         
         return (item, itemJSON)
+    }
+    
+    private func failure(_ error: RemoteCoffeePostsLoader.Error) -> RemoteCoffeePostsLoader.Result {
+        return .failure(error)
     }
     
     private func makePostsJSON(_ posts: [[String: Any]]) -> Data {
