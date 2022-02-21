@@ -52,9 +52,13 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
         sut.load { capturedErrors.append($0) }
 
-        client.complete(withStatusCode: 400)
+        [199, 201, 300, 400, 500].forEach { code in
         
-        XCTAssertEqual(capturedErrors, [.invalidData])
+            client.complete(withStatusCode: code)
+        
+            XCTAssertEqual(capturedErrors, [.invalidData])
+            capturedErrors = []
+        }
 
     }
 
