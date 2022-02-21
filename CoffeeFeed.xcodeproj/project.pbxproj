@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5268437827C4244F00123DA7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437727C4244F00123DA7 /* HTTPClient.swift */; };
 		529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */ = {isa = PBXBuildFile; fileRef = 529947CE278DF66C00281F9E /* CoffeeFeed.docc */; };
 		529947D5278DF66D00281F9E /* CoffeeFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 529947CA278DF66C00281F9E /* CoffeeFeed.framework */; };
 		529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E4278DF78A00281F9E /* CoffeePost.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5268437727C4244F00123DA7 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		529947CA278DF66C00281F9E /* CoffeeFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoffeeFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529947CE278DF66C00281F9E /* CoffeeFeed.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CoffeeFeed.docc; sourceTree = "<group>"; };
 		529947D4278DF66D00281F9E /* CoffeeFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				529947ED278E0D8900281F9E /* RemoteCoffeePostsLoader.swift */,
+				5268437727C4244F00123DA7 /* HTTPClient.swift */,
 			);
 			path = CoffeeFeedAPI;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				529947EE278E0D8900281F9E /* RemoteCoffeePostsLoader.swift in Sources */,
+				5268437827C4244F00123DA7 /* HTTPClient.swift in Sources */,
 				529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */,
 				529947E7278DF8D200281F9E /* CoffeePostsLoader.swift in Sources */,
 				529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */,
