@@ -28,8 +28,4 @@ extension CoffeePost: Decodable {
         case location
         case imageURL = "image"
     }
-    
-    struct Root: Decodable {
-        let posts: [CoffeePost]
-    }
 }

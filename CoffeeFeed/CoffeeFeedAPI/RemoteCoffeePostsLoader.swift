@@ -39,7 +39,7 @@ public final class RemoteCoffeePostsLoader {
         client.get(from: url) { result in
             switch result {
             case let .success(data, _):
-                if let root = try? JSONDecoder().decode(CoffeePost.Root.self, from: data) {
+                if let root = try? JSONDecoder().decode(Root.self, from: data) {
                     completion(.success(root.posts))
                 } else {
                     completion(.failure(.invalidData))
@@ -50,3 +50,8 @@ public final class RemoteCoffeePostsLoader {
         }
     }
 }
+
+private struct Root: Decodable {
+    let posts: [CoffeePost]
+}
+
