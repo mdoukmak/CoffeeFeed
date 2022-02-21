@@ -67,15 +67,15 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     private class HTTPClientSpy: HTTPClient {
-        var requests: [(url: URL, completion: (Error?, HTTPURLResponse?) -> Void)] = []
+        var requests: [(url: URL, completion: (HTTPClientResult) -> Void)] = []
         var requestedURLs: [URL] { requests.map { $0.url } }
         
-        func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void) {
+        func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
             requests.append((url, completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            requests[index].completion(error, nil)
+            requests[index].completion(.failure(error))
         }
         
         func complete(withStatusCode code: Int, at index: Int = 0) {
@@ -84,8 +84,8 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
                 statusCode: code,
                 httpVersion: nil,
                 headerFields: nil
-            )
-            requests[index].completion(nil, response)
+            )!
+            requests[index].completion(.success(response))
         }
     }
 }
