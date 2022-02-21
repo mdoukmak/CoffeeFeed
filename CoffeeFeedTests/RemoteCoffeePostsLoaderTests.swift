@@ -89,6 +89,21 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         }
     }
     
+    func test_loadDoesNotDeliverResult_afterSUTHasBeenDeallocated() {
+        let url = URL(string: "http://any-url.com")!
+        let client = HTTPClientSpy()
+        var sut: RemoteCoffeePostsLoader? = RemoteCoffeePostsLoader(url: url, client: client)
+        var capturedResults: [RemoteCoffeePostsLoader.Result] = []
+        
+        sut?.load(completion: { capturedResults.append($0) })
+        
+        sut = nil
+        
+        client.complete(withStatusCode: 200, data: makePostsJSON([]))
+        
+        XCTAssertTrue(capturedResults.isEmpty)
+    }
+    
     // MARK: - Helpers
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!, file: StaticString = #file, line: UInt = #line) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
