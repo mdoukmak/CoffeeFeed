@@ -37,13 +37,10 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onClientError() {
         let (sut, client) = makeSUT()
         
-        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
-        sut.load { capturedErrors.append($0) }
-
-        let clientError = NSError(domain: "Test", code: 0)
-        client.complete(with: clientError)
-        
-        XCTAssertEqual(capturedErrors, [.connectivity])
+        expect(sut, toCompleteWithError: .connectivity) {
+            let clientError = NSError(domain: "Test", code: 0)
+            client.complete(with: clientError)
+        }
     }
     
     func test_load_deliversError_onNon200HTTPResponse() {
@@ -51,14 +48,21 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         
         let samples = [199, 201, 300, 400, 500].enumerated()
         samples.forEach { index, code in
-            var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
-            sut.load { capturedErrors.append($0) }
-        
-            client.complete(withStatusCode: code, at: index)
-        
-            XCTAssertEqual(capturedErrors, [.invalidData])
+            expect(sut, toCompleteWithError: .invalidData) {
+                client.complete(withStatusCode: code, at: index)
+            }
         }
 
+    }
+    
+    func test_load_returnsError_onHTTP200_withInvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWithError: .invalidData) {
+            let invalidJSON = Data("invalid JSON".utf8)
+            
+            client.complete(withStatusCode: 200, data: invalidJSON)
+        }
     }
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
@@ -66,6 +70,16 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let sut = RemoteCoffeePostsLoader(url: url, client: client)
         return (sut, client)
     }
+    
+    private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithError error: RemoteCoffeePostsLoader.Error, when action: () -> Void) {
+        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
+        sut.load { capturedErrors.append($0) }
+
+        action()
+        
+        XCTAssertEqual(capturedErrors, [error])
+    }
+    
     private class HTTPClientSpy: HTTPClient {
         var requests: [(url: URL, completion: (HTTPClientResult) -> Void)] = []
         var requestedURLs: [URL] { requests.map { $0.url } }
@@ -78,14 +92,14 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
             requests[index].completion(.failure(error))
         }
         
-        func complete(withStatusCode code: Int, at index: Int = 0) {
+        func complete(withStatusCode code: Int, data: Data = Data(), at index: Int = 0) {
             let response = HTTPURLResponse(
                 url: requestedURLs[index],
                 statusCode: code,
                 httpVersion: nil,
                 headerFields: nil
             )!
-            requests[index].completion(.success(response))
+            requests[index].completion(.success(data, response))
         }
     }
 }
