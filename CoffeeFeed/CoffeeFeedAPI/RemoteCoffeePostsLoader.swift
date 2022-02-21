@@ -53,8 +53,9 @@ public final class RemoteCoffeePostsLoader {
 }
 
 private class CoffeePostsMapper {
+    private static var OK_200: Int { 200 }
     static func map(_ data: Data, response: HTTPURLResponse) throws -> [CoffeePost] {
-        guard response.statusCode == 200 else {
+        guard response.statusCode == OK_200 else {
             throw RemoteCoffeePostsLoader.Error.invalidData
         }
         return try JSONDecoder().decode(Root.self, from: data).posts.map { $0.post }
