@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum LoadPostsResult {
+public enum LoadPostsResult {
     case success([CoffeePost])
-    case error(Error)
+    case failure(Error)
 }
 
 protocol CoffeePostsLoader {
-    func loadPosts(completion: @escaping (LoadPostsResult) -> Void)
+    func load(completion: @escaping (LoadPostsResult) -> Void)
 }

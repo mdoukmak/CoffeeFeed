@@ -37,7 +37,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(.connectivity)) {
+        expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -48,7 +48,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         
         let samples = [199, 201, 300, 400, 500].enumerated()
         samples.forEach { index, code in
-            expect(sut, toCompleteWithResult: .failure(.invalidData)) {
+            expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.invalidData)) {
                 let json = makePostsJSON([])
                 client.complete(withStatusCode: code, data: json, at: index)
             }
@@ -59,7 +59,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_returnsError_onHTTP200_withInvalidJSON() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(.invalidData)) {
+        expect(sut, toCompleteWithResult: .failure(RemoteCoffeePostsLoader.Error.invalidData)) {
             let invalidJSON = Data("invalid JSON".utf8)
             
             client.complete(withStatusCode: 200, data: invalidJSON)
@@ -144,13 +144,25 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithResult result: RemoteCoffeePostsLoader.Result, when action: () -> Void) {
-        var capturedResults: [RemoteCoffeePostsLoader.Result] = []
-        sut.load { capturedResults.append($0) }
+    private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithResult expectedResult: RemoteCoffeePostsLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.load { receivedResult in
+            switch (expectedResult, receivedResult) {
+            case let (.success(expectedPosts), .success(receivedPosts)):
+                XCTAssertEqual(expectedPosts, receivedPosts, file: file, line: line)
+            case let (.failure(expectedError as RemoteCoffeePostsLoader.Error), .failure(receivedError as RemoteCoffeePostsLoader.Error)):
+                XCTAssertEqual(expectedError, receivedError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult) received \(receivedResult)")
+            }
+            
+            exp.fulfill()
+        }
 
         action()
-        
-        XCTAssertEqual(capturedResults, [result])
+        wait(for: [exp], timeout: 1.0)
     }
     
     private class HTTPClientSpy: HTTPClient {

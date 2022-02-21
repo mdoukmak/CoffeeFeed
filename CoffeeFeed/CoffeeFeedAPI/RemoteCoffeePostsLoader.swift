@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RemoteCoffeePostsLoader {
+public final class RemoteCoffeePostsLoader: CoffeePostsLoader {
     private let client: HTTPClient
     private let url: URL
     
@@ -16,10 +16,12 @@ public final class RemoteCoffeePostsLoader {
         case invalidData
     }
     
-    public enum Result: Equatable {
-        case success([CoffeePost])
-        case failure(Error)
-    }
+//    public enum Result: Equatable {
+//        case success([CoffeePost])
+//        case failure(Error)
+//    }
+    
+    public typealias Result = LoadPostsResult
     
     public init(url: URL, client: HTTPClient) {
         self.client = client
@@ -33,7 +35,7 @@ public final class RemoteCoffeePostsLoader {
             case let .success(data, response):
                 completion(CoffeePostsMapper.map(data, from: response))
             case .failure:
-                completion(.failure(.connectivity))
+                completion(.failure(Error.connectivity))
             }
         }
     }

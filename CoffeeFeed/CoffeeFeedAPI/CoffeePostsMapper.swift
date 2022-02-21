@@ -33,7 +33,7 @@ final class CoffeePostsMapper {
         guard response.statusCode == OK_200,
               let root = try? JSONDecoder().decode(Root.self, from: data)
         else {
-            return RemoteCoffeePostsLoader.Result.failure(.invalidData)
+            return RemoteCoffeePostsLoader.Result.failure(RemoteCoffeePostsLoader.Error.invalidData)
         }
         
         return .success(root.feed)
