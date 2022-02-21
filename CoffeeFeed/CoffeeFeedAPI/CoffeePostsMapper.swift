@@ -9,14 +9,13 @@ import Foundation
 
 final class CoffeePostsMapper {
     private static var OK_200: Int { 200 }
-    static func map(_ data: Data, response: HTTPURLResponse) throws -> [CoffeePost] {
-        guard response.statusCode == OK_200 else {
-            throw RemoteCoffeePostsLoader.Error.invalidData
-        }
-        return try JSONDecoder().decode(Root.self, from: data).posts.map { $0.post }
-    }
+    
     private struct Root: Decodable {
         let posts: [Post]
+        
+        var feed: [CoffeePost] {
+            return posts.map { $0.post }
+        }
     }
     
     private struct Post: Decodable {
@@ -29,4 +28,15 @@ final class CoffeePostsMapper {
             return CoffeePost(id: id, description: description, location: location, imageURL: image)
         }
     }
+    
+    static func map(_ data: Data, from response: HTTPURLResponse) -> RemoteCoffeePostsLoader.Result {
+        guard response.statusCode == OK_200,
+              let root = try? JSONDecoder().decode(Root.self, from: data)
+        else {
+            return RemoteCoffeePostsLoader.Result.failure(.invalidData)
+        }
+        
+        return .success(root.feed)
+    }
+
 }

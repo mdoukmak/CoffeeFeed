@@ -30,12 +30,7 @@ public final class RemoteCoffeePostsLoader {
         client.get(from: url) { result in
             switch result {
             case let .success(data, response):
-                do {
-                    let posts = try CoffeePostsMapper.map(data, response: response)
-                    completion(.success(posts))
-                } catch {
-                    completion(.failure(.invalidData))
-                }
+                completion(CoffeePostsMapper.map(data, from: response))
             case .failure:
                 completion(.failure(.connectivity))
             }

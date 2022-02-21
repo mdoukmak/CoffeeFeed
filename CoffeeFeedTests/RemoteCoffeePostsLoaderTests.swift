@@ -91,10 +91,20 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     
     // MARK: - Helpers
 
-    private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://any-url.com")!, file: StaticString = #file, line: UInt = #line) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteCoffeePostsLoader(url: url, client: client)
+        
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(client, file: file, line: line)
+        
         return (sut, client)
+    }
+    
+    private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated", file: file, line: line)
+        }
     }
     
     private func makeItem(id: UUID, description: String?, location: String?, imageURL: URL) -> (CoffeePost, [String:Any]) {
