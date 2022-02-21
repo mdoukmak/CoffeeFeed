@@ -49,15 +49,14 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onNon200HTTPResponse() {
         let (sut, client) = makeSUT()
         
-        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
-        sut.load { capturedErrors.append($0) }
 
-        [199, 201, 300, 400, 500].forEach { code in
+        [199, 201, 300, 400, 500].enumerated().forEach { index, code in
+            var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
+            sut.load { capturedErrors.append($0) }
         
-            client.complete(withStatusCode: code)
+            client.complete(withStatusCode: code, at: index)
         
             XCTAssertEqual(capturedErrors, [.invalidData])
-            capturedErrors = []
         }
 
     }
