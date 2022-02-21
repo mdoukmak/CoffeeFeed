@@ -41,7 +41,7 @@ public final class RemoteCoffeePostsLoader {
             case let .success(data, response):
                 if response.statusCode == 200,
                    let root = try? JSONDecoder().decode(Root.self, from: data) {
-                    completion(.success(root.posts))
+                    completion(.success(root.posts.map { $0.post }))
                 } else {
                     completion(.failure(.invalidData))
                 }
@@ -53,6 +53,16 @@ public final class RemoteCoffeePostsLoader {
 }
 
 private struct Root: Decodable {
-    let posts: [CoffeePost]
+    let posts: [Post]
 }
 
+private struct Post: Decodable {
+    public let id: UUID
+    public let description: String?
+    public let location: String?
+    public let image: URL
+    
+    var post: CoffeePost {
+        return CoffeePost(id: id, description: description, location: location, imageURL: image)
+    }
+}
