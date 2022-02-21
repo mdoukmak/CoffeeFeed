@@ -38,12 +38,10 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         client.error = NSError(domain: "Test", code: 0)
         
-        var capturedError: RemoteCoffeePostsLoader.Error?
-        sut.load { error in
-            capturedError = error
-        }
+        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
+        sut.load { capturedErrors.append($0) }
         
-        XCTAssertNotNil(capturedError)
+        XCTAssertEqual(capturedErrors, [.connectivity])
     }
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
