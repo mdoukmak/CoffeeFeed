@@ -39,8 +39,8 @@ public final class RemoteCoffeePostsLoader {
         client.get(from: url) { result in
             switch result {
             case let .success(data, _):
-                if let _ = try? JSONSerialization.jsonObject(with: data) {
-                    completion(.success([]))
+                if let root = try? JSONDecoder().decode(CoffeePost.Root.self, from: data) {
+                    completion(.success(root.posts))
                 } else {
                     completion(.failure(.invalidData))
                 }

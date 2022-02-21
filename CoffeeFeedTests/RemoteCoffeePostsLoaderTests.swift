@@ -69,8 +69,37 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWithResult: .success([])) {
-            let emptyListJSON = Data("{\"items\":[]}".utf8)
+            let emptyListJSON = Data("{\"posts\":[]}".utf8)
             client.complete(withStatusCode: 200, data: emptyListJSON)
+        }
+    }
+    
+    func test_load_deliversPostsOnHTTP200_withNonEmptyJSONList() {
+        let (sut, client) = makeSUT()
+        
+        let post1 = CoffeePost(id: UUID(), description: nil, location: nil, imageURL: URL(string: "http://any-url.com")!)
+        
+        let post1JSON = [
+            "id": post1.id.uuidString,
+            "image": post1.imageURL.absoluteString
+        ]
+        
+        let post2 = CoffeePost(id: UUID(), description: "A description", location: "A location", imageURL: URL(string: "http://any-url.com")!)
+        
+        let post2JSON = [
+            "id": post2.id.uuidString,
+            "description": post2.description,
+            "location": post2.location,
+            "image": post2.imageURL.absoluteString
+        ]
+        
+        let postsJSON = [
+            "posts": [post1JSON, post2JSON]
+        ]
+        
+        expect(sut, toCompleteWithResult: .success([post1, post2])) {
+            let json = try! JSONSerialization.data(withJSONObject: postsJSON)
+            client.complete(withStatusCode: 200, data: json)
         }
     }
     
