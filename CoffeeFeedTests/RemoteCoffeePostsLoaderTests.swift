@@ -37,7 +37,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithError: .connectivity) {
+        expect(sut, toCompleteWithResult: .failure(.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -48,7 +48,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         
         let samples = [199, 201, 300, 400, 500].enumerated()
         samples.forEach { index, code in
-            expect(sut, toCompleteWithError: .invalidData) {
+            expect(sut, toCompleteWithResult: .failure(.invalidData)) {
                 client.complete(withStatusCode: code, at: index)
             }
         }
@@ -58,7 +58,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_returnsError_onHTTP200_withInvalidJSON() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithError: .invalidData) {
+        expect(sut, toCompleteWithResult: .failure(.invalidData)) {
             let invalidJSON = Data("invalid JSON".utf8)
             
             client.complete(withStatusCode: 200, data: invalidJSON)
@@ -68,16 +68,10 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversEmptyResult_onHTTP200_withEmptyJSONList() {
         let (sut, client) = makeSUT()
         
-        let emptyListJSON = Data("{\"items\":[]}".utf8)
-        var capturedResults = [RemoteCoffeePostsLoader.Result]()
-        
-        sut.load { result in
-            capturedResults.append(result)
+        expect(sut, toCompleteWithResult: .success([])) {
+            let emptyListJSON = Data("{\"items\":[]}".utf8)
+            client.complete(withStatusCode: 200, data: emptyListJSON)
         }
-        
-        client.complete(withStatusCode: 200, data: emptyListJSON)
-        
-        XCTAssertEqual(capturedResults, [.success([])])
     }
     
     // MARK: - Helpers
@@ -88,13 +82,13 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     
-    private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithError error: RemoteCoffeePostsLoader.Error, when action: () -> Void) {
+    private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithResult result: RemoteCoffeePostsLoader.Result, when action: () -> Void) {
         var capturedResults: [RemoteCoffeePostsLoader.Result] = []
         sut.load { capturedResults.append($0) }
 
         action()
         
-        XCTAssertEqual(capturedResults, [.failure(error)])
+        XCTAssertEqual(capturedResults, [result])
     }
     
     private class HTTPClientSpy: HTTPClient {
