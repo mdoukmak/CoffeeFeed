@@ -50,7 +50,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         samples.forEach { index, code in
             expect(sut, toCompleteWithResult: .failure(.invalidData)) {
                 let json = makePostsJSON([])
-                client.complete(withStatusCode: code, at: index)
+                client.complete(withStatusCode: code, data: json, at: index)
             }
         }
 
