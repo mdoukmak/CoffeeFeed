@@ -45,6 +45,18 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         
         XCTAssertEqual(capturedErrors, [.connectivity])
     }
+    
+    func test_load_deliversError_onNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
+        sut.load { capturedErrors.append($0) }
+
+        client.complete(withStatusCode: 400)
+        
+        XCTAssertEqual(capturedErrors, [.invalidData])
+
+    }
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (RemoteCoffeePostsLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -52,15 +64,25 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     private class HTTPClientSpy: HTTPClient {
-        var requests: [(url: URL, completion: (Error) -> Void)] = []
+        var requests: [(url: URL, completion: (Error?, HTTPURLResponse?) -> Void)] = []
         var requestedURLs: [URL] { requests.map { $0.url } }
         
-        func get(from url: URL, completion: @escaping (Error) -> Void) {
+        func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void) {
             requests.append((url, completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            requests[index].completion(error)
+            requests[index].completion(error, nil)
+        }
+        
+        func complete(withStatusCode code: Int, at index: Int = 0) {
+            let response = HTTPURLResponse(
+                url: requestedURLs[index],
+                statusCode: code,
+                httpVersion: nil,
+                headerFields: nil
+            )
+            requests[index].completion(nil, response)
         }
     }
 }
