@@ -49,8 +49,8 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversError_onNon200HTTPResponse() {
         let (sut, client) = makeSUT()
         
-
-        [199, 201, 300, 400, 500].enumerated().forEach { index, code in
+        let samples = [199, 201, 300, 400, 500].enumerated()
+        samples.forEach { index, code in
             var capturedErrors: [RemoteCoffeePostsLoader.Error] = []
             sut.load { capturedErrors.append($0) }
         
