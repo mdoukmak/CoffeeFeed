@@ -49,6 +49,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500].enumerated()
         samples.forEach { index, code in
             expect(sut, toCompleteWithResult: .failure(.invalidData)) {
+                let json = makePostsJSON([])
                 client.complete(withStatusCode: code, at: index)
             }
         }
@@ -83,7 +84,7 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let (post2, post2JSON) = makeItem(id: UUID(), description: "A description", location: "A location", imageURL: URL(string: "http://any-url.com")!)
         
         expect(sut, toCompleteWithResult: .success([post1, post2])) {
-            let json = makePostsJSON(["posts": [post1JSON, post2JSON]])
+            let json = makePostsJSON([post1JSON, post2JSON])
             client.complete(withStatusCode: 200, data: json)
         }
     }
@@ -113,8 +114,9 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (item, itemJSON)
     }
     
-    private func makePostsJSON(_ postsJSON: [String: Any]) -> Data {
-        return try! JSONSerialization.data(withJSONObject: postsJSON)
+    private func makePostsJSON(_ posts: [[String: Any]]) -> Data {
+        let json = ["posts": posts]
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithResult result: RemoteCoffeePostsLoader.Result, when action: () -> Void) {
