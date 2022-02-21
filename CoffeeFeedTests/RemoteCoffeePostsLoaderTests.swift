@@ -77,28 +77,13 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
     func test_load_deliversPostsOnHTTP200_withNonEmptyJSONList() {
         let (sut, client) = makeSUT()
         
-        let post1 = CoffeePost(id: UUID(), description: nil, location: nil, imageURL: URL(string: "http://any-url.com")!)
+        let (post1, post1JSON) = makeItem(id: UUID(), description: nil, location: nil, imageURL: URL(string: "http://any-url.com")!)
         
-        let post1JSON = [
-            "id": post1.id.uuidString,
-            "image": post1.imageURL.absoluteString
-        ]
         
-        let post2 = CoffeePost(id: UUID(), description: "A description", location: "A location", imageURL: URL(string: "http://any-url.com")!)
-        
-        let post2JSON = [
-            "id": post2.id.uuidString,
-            "description": post2.description,
-            "location": post2.location,
-            "image": post2.imageURL.absoluteString
-        ]
-        
-        let postsJSON = [
-            "posts": [post1JSON, post2JSON]
-        ]
+        let (post2, post2JSON) = makeItem(id: UUID(), description: "A description", location: "A location", imageURL: URL(string: "http://any-url.com")!)
         
         expect(sut, toCompleteWithResult: .success([post1, post2])) {
-            let json = try! JSONSerialization.data(withJSONObject: postsJSON)
+            let json = makePostsJSON(["posts": [post1JSON, post2JSON]])
             client.complete(withStatusCode: 200, data: json)
         }
     }
@@ -109,6 +94,27 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteCoffeePostsLoader(url: url, client: client)
         return (sut, client)
+    }
+    
+    private func makeItem(id: UUID, description: String?, location: String?, imageURL: URL) -> (CoffeePost, [String:Any]) {
+        let item = CoffeePost(id: id, description: description, location: location, imageURL: imageURL)
+        
+        let itemJSON = [
+            "id": id.uuidString,
+            "description": description,
+            "location": location,
+            "image": imageURL.absoluteString
+        ].reduce(into: [String: Any]()) { acc, e in
+            if let value = e.value {
+                acc[e.key] = value
+            }
+        }
+        
+        return (item, itemJSON)
+    }
+    
+    private func makePostsJSON(_ postsJSON: [String: Any]) -> Data {
+        return try! JSONSerialization.data(withJSONObject: postsJSON)
     }
     
     private func expect(_ sut: RemoteCoffeePostsLoader, toCompleteWithResult result: RemoteCoffeePostsLoader.Result, when action: () -> Void) {
