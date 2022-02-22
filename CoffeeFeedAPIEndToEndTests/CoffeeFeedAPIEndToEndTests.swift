@@ -11,7 +11,6 @@ import CoffeeFeed
 class CoffeeFeedAPIEndToEndTests: XCTestCase {
 
     func test_endToEndTestServerGetCoffeeFeedResult_matchesFixedTestAccountData() {
-//        let testServerURL = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
         let testServerURL = URL(string: "https://api.mockaroo.com/api/42ef8100?count=1&key=ab4ba600")!
         let client = URLSessionHTTPClient()
         let loader = RemoteCoffeePostsLoader(url: testServerURL, client: client)
