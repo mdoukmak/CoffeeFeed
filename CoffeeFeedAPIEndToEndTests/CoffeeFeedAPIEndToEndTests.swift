@@ -12,7 +12,7 @@ class CoffeeFeedAPIEndToEndTests: XCTestCase {
 
     func test_endToEndTestServerGetCoffeeFeedResult_matchesFixedTestAccountData() {
         let testServerURL = URL(string: "https://api.mockaroo.com/api/42ef8100?count=1&key=ab4ba600")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let loader = RemoteCoffeePostsLoader(url: testServerURL, client: client)
         
         let exp = expectation(description: "Wait for load completion")
