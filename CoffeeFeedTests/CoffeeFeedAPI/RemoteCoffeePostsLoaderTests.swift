@@ -116,12 +116,6 @@ class RemoteCoffeePostsLoaderTests: XCTestCase {
         return (sut, client)
     }
     
-    private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Instance should have been deallocated", file: file, line: line)
-        }
-    }
-    
     private func makeItem(id: UUID, description: String?, location: String?, imageURL: URL) -> (CoffeePost, [String:Any]) {
         let item = CoffeePost(id: id, description: description, location: location, imageURL: imageURL)
         
