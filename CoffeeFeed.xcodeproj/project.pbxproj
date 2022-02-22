@@ -12,6 +12,8 @@
 		5268437D27C4441400123DA7 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437C27C4441400123DA7 /* URLSessionHTTPClient.swift */; };
 		5268437F27C4445400123DA7 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268437E27C4445400123DA7 /* URLSessionHTTPClientTests.swift */; };
 		5268438227C4610D00123DA7 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268438127C4610D00123DA7 /* XCTestCase+MemoryLeakTracking.swift */; };
+		5268438A27C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268438927C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.swift */; };
+		5268438B27C48ADE00123DA7 /* CoffeeFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 529947CA278DF66C00281F9E /* CoffeeFeed.framework */; };
 		529947CF278DF66C00281F9E /* CoffeeFeed.docc in Sources */ = {isa = PBXBuildFile; fileRef = 529947CE278DF66C00281F9E /* CoffeeFeed.docc */; };
 		529947D5278DF66D00281F9E /* CoffeeFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 529947CA278DF66C00281F9E /* CoffeeFeed.framework */; };
 		529947E5278DF78A00281F9E /* CoffeePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529947E4278DF78A00281F9E /* CoffeePost.swift */; };
@@ -21,6 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5268438C27C48ADE00123DA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 529947C1278DF66C00281F9E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 529947C9278DF66C00281F9E;
+			remoteInfo = CoffeeFeed;
+		};
 		529947D6278DF66D00281F9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 529947C1278DF66C00281F9E /* Project object */;
@@ -36,6 +45,8 @@
 		5268437C27C4441400123DA7 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		5268437E27C4445400123DA7 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		5268438127C4610D00123DA7 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		5268438727C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5268438927C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		529947CA278DF66C00281F9E /* CoffeeFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoffeeFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		529947CE278DF66C00281F9E /* CoffeeFeed.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CoffeeFeed.docc; sourceTree = "<group>"; };
 		529947D4278DF66D00281F9E /* CoffeeFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +57,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5268438427C48ADE00123DA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5268438B27C48ADE00123DA7 /* CoffeeFeed.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		529947C7278DF66C00281F9E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,11 +100,20 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5268438827C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				5268438927C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.swift */,
+			);
+			path = CoffeeFeedAPIEndToEndTests;
+			sourceTree = "<group>";
+		};
 		529947C0278DF66C00281F9E = {
 			isa = PBXGroup;
 			children = (
 				529947CC278DF66C00281F9E /* CoffeeFeed */,
 				529947D8278DF66D00281F9E /* CoffeeFeedTests */,
+				5268438827C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests */,
 				529947CB278DF66C00281F9E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +123,7 @@
 			children = (
 				529947CA278DF66C00281F9E /* CoffeeFeed.framework */,
 				529947D4278DF66D00281F9E /* CoffeeFeedTests.xctest */,
+				5268438727C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +180,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5268438627C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5268438E27C48ADE00123DA7 /* Build configuration list for PBXNativeTarget "CoffeeFeedAPIEndToEndTests" */;
+			buildPhases = (
+				5268438327C48ADE00123DA7 /* Sources */,
+				5268438427C48ADE00123DA7 /* Frameworks */,
+				5268438527C48ADE00123DA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5268438D27C48ADE00123DA7 /* PBXTargetDependency */,
+			);
+			name = CoffeeFeedAPIEndToEndTests;
+			productName = CoffeeFeedAPIEndToEndTests;
+			productReference = 5268438727C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		529947C9278DF66C00281F9E /* CoffeeFeed */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 529947DE278DF66D00281F9E /* Build configuration list for PBXNativeTarget "CoffeeFeed" */;
@@ -197,6 +244,9 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					5268438627C48ADE00123DA7 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					529947C9278DF66C00281F9E = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -221,11 +271,19 @@
 			targets = (
 				529947C9278DF66C00281F9E /* CoffeeFeed */,
 				529947D3278DF66D00281F9E /* CoffeeFeedTests */,
+				5268438627C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5268438527C48ADE00123DA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		529947C8278DF66C00281F9E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -243,6 +301,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5268438327C48ADE00123DA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5268438A27C48ADE00123DA7 /* CoffeeFeedAPIEndToEndTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		529947C6278DF66C00281F9E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +336,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5268438D27C48ADE00123DA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 529947C9278DF66C00281F9E /* CoffeeFeed */;
+			targetProxy = 5268438C27C48ADE00123DA7 /* PBXContainerItemProxy */;
+		};
 		529947D7278DF66D00281F9E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 529947C9278DF66C00281F9E /* CoffeeFeed */;
@@ -278,6 +349,36 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5268438F27C48ADE00123DA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.muhammaddoukmak.CoffeeFeedAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5268439027C48ADE00123DA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.muhammaddoukmak.CoffeeFeedAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		529947DC278DF66D00281F9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -499,6 +600,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5268438E27C48ADE00123DA7 /* Build configuration list for PBXNativeTarget "CoffeeFeedAPIEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5268438F27C48ADE00123DA7 /* Debug */,
+				5268439027C48ADE00123DA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		529947C4278DF66C00281F9E /* Build configuration list for PBXProject "CoffeeFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
